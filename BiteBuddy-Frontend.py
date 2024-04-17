@@ -86,6 +86,7 @@ user_input = st.text_input("Gib hier die Anzahl an Personen ein (Max. 4 Personen
 
 #nun folgt der Start Button 
 st.button("Wir möchten Starten") 
+
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
 st.write("")
@@ -128,6 +129,7 @@ with col3:
         user_input = st.text_input("Die Bewertung von 1-5 (1 sehr tief, 5 sehr hoch)")
 
 
-st.button("Klicke um zu zauberen!")
+st.button("Wir möchten Starten")
+
 
 
