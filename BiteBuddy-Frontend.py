@@ -128,6 +128,6 @@ with col3:
         user_input = st.text_input("Die Bewertung von 1-5 (1 sehr tief, 5 sehr hoch)")
 
 
-st.button("Drücke um zu Zauberen")
+st.button("Klicke um zu zauberen!")
 
 
