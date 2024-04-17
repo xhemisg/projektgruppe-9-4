@@ -128,7 +128,8 @@ with col3:
         user_input = st.text_input("Die Bewertung von 1-5 (1 sehr tief, 5 sehr hoch)")
 
 
-st.button("Zaubere")
+st.button("Zaubere"):
+st.write("Riechst du bereits dein Essen?"
 
 
 
