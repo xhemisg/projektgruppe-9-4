@@ -100,9 +100,9 @@ user_input = st.text_input("Gebe hier deinen Namen ein")
 #Nun beginnt der eigentliche Teil indem die vorgebenen Kriterien angegeben werden 
 # Überprüfe, ob der Nutzer bereits einen Namen eingegeben hat
 if user_input:
-    st.title(f"Lass uns beginnen, {user_input}!")
+    st.title(f"Lass uns beginnen, {user_input}")
 else:
-    st.title("Bitte gib deinen Namen ein")
+    st.title("Bitte gib deinen Namen ein!!")
 
 #Küche eingeneben 
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
@@ -128,8 +128,6 @@ with col3:
         user_input = st.text_input("Die Bewertung von 1-5 (1 sehr tief, 5 sehr hoch)")
 
 
-st.button("Zaubere"):
-st.write("Riechst du bereits dein Essen?")
 
 
 
