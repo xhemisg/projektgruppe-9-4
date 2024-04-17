@@ -129,7 +129,7 @@ with col3:
 
 
 st.button("Zaubere"):
-st.write("Riechst du bereits dein Essen?"
+st.write("Riechst du bereits dein Essen?")
 
 
 
