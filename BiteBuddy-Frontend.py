@@ -1,19 +1,5 @@
 import streamlit as st
 
-#anpassung des Hintergrundes sowie der Schriftfarbe über einen von ChatGPT geschrieben Code 
-def load_css():
-    st.markdown("""
-        <style>
-        body {
-            color: #000000; /* Schriftfarbe */
-            background-color: #ffffff; /* Hintergrundfarbe */
-        }
-        </style>
-        """, unsafe_allow_html=True)
-
-load_css()
-
-
 st.title('Let us solve, what and where you\'ll eat tonight')
 st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
