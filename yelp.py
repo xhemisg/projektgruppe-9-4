@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 
-def get_restaurant_data(location,rating):
+def get_restaurant_data(location,rating): #funktion definiert um daten von API zu erhalten
     api_key = 'GjgxNlVcPtkDQOJsW9oZoSS0jjn74Yb6i3qoEoPxTu4ylG59rSNTvwVfA9knU42IaCSl1qIoIU0tGdnD-OJCPAFHNc_KvwjXF4pZhXw6RCZ4_hJfD6dz2fxYPawmZnYx'  # Replace this with your actual Yelp API key
     headers = {'Authorization': f'Bearer {api_key}'}
     url = 'https://api.yelp.com/v3/businesses/search'
@@ -12,7 +12,7 @@ def get_restaurant_data(location,rating):
     return data
 
 
-st.title('Restaurant Finder')
+st.title('Restaurant Finder') #wie es in streamlit ausschaut
 location = st.text_input('Enter a location to search for restaurants:')
 if st.button('Search'):
     restaurant_data = get_restaurant_data(location)
