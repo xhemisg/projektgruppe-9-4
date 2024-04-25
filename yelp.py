@@ -7,7 +7,7 @@ rating = st.slider('Select minimum rating:', 1.0, 5.0, step=0.5)
 st.button('Search')
     
 
-def get_restaurant_data(location,min_rating): #funktion definiert um daten von API zu erhalten
+def get_restaurant_data(location: str, min_rating: float = 3.5): #funktion definiert um daten von API zu erhalten
     api_key = 'GjgxNlVcPtkDQOJsW9oZoSS0jjn74Yb6i3qoEoPxTu4ylG59rSNTvwVfA9knU42IaCSl1qIoIU0tGdnD-OJCPAFHNc_KvwjXF4pZhXw6RCZ4_hJfD6dz2fxYPawmZnYx'  # Replace this with your actual Yelp API key
     headers = {'Authorization': f'Bearer {api_key}'}
     url = 'https://api.yelp.com/v3/businesses/search'
