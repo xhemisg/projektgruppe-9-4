@@ -1,4 +1,8 @@
-import streamlit as st
+import streamlit as st 
+import API
+import UI
+
+
 
 st.title('Let us solve, what and where you\'ll eat tonight')
 st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
@@ -7,35 +11,6 @@ st.write("")
 
 
 
-# erstes Eingabefeld komplett im Folgenden
-st.write("NUR DIESE DREI SCHRITTE NEHMEN EUCH DEN HUNGER") #info was die folgenden Templates aussagen 
-st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
-st.write("")
-
-
-#Spalten mit Infos zu den drei Schritten um mit BiteBuddy erfolgreich sein Essen auszuwählen
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    with st.expander("Anzahl an Personen"): #durch st.expand die Möglichkeit jede der drei Spalten auszuklappen, sodass nur Überschrift in erster Linie zu sehen ist 
-        st.write("Gebt an wieviel Leute fast verhungern")
-
-with col2:
-    with st.expander("Eure Kriterien"):
-        st.write("Jeder gibt manuell seine Daten zu Budget, Standort, Küche und Wunschbewertung ein")
-
-with col3:
-    with st.expander("Zaubere!"):
-        st.write("Nur noch einmal klicken und der Zauber beginnt")
-
-st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
-st.write("")
-st.write("")
-
-
-#nun wird die BiteBuddy Experience erklärt in den einzelnen Schritten; im Folgenden wird CSS genutzt um den Kasten zu gestalten 
-
-# CSS zur Gestaltung des Kastens direkt in HTML einbetten
 #Notiz: der Folgende Code wurde mithilfe von ChatGPT geschrieben, um das Layout ansehnlich zu gestalten!! (da es nicht in der Vorlesung geleehrt wurde, wurde auf ChatGPT zurückgegriffen)
 def set_css():
     st.markdown("""
@@ -80,8 +55,6 @@ st.write("")
 st.title("Anzahl Personen") 
 user_input = st.text_input("Gib hier die Anzahl an Personen ein (Max. 4 Personen)")
 
-#nun folgt der Start Button 
-st.button("Wir möchten Starten") 
 
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
@@ -108,24 +81,25 @@ st.write("")
 st.write("")
 st.write("")
 
-user_input = st.text_input("Welche Küche bevorzugst du? Bitte gebe den Namen in CAPSLOCK ein!")
-
-#Kriterien eingeben 
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    with st.title("Dein Standort"): #durch st.expand die Möglichkeit jede der drei Spalten auszuklappen, sodass nur Überschrift in erster Linie zu sehen ist 
-       user_input = st.text_input("Wo wollt ihr essen? Gebe dein Standort ein")
-with col2:
-    with st.title("Dein Budget von 1-5"):
-        user_input = st.text_input("Dein Budget von 1-5 (1 sehr tief, 5 sehr hoch)")
-
-with col3:
-    with st.title("Die Mindestbewertung?"):
-        user_input = st.text_input("Die Bewertung von 1-5 (1 sehr tief, 5 sehr hoch)")
-
-
-st.button("Wir möchten Starten")
 
 
 
+
+location = st.text_input("Wo würdest du gerne essen?")
+categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ])
+price = st.slider("Select a budget", 1, 4, 3 )
+min_rating = st.slider("Select a minimum rating", 1.0, 5.0, 3.0, step =0.1)
+
+
+all_restaurants = []
+fav_restaurants = []
+
+
+if st.button("Finde mein Restaurant"):
+    restaurant_data = API.get_restaurant_data(location, categories, price, min_rating)
+    all_restaurants = restaurant_data
+    UI.restaurant_data_display(restaurant_data,fav_restaurants)
+   
+
+if st.button("Zeig meine Favouriten"):
+    UI.show_favourites(fav_restaurants)
