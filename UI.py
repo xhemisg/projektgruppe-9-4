@@ -4,9 +4,10 @@ import app
 
 
 
-
+##hier wird das Layout der Ausgabe bestimmt
 def restaurant_data_display(restaurant_data, fav_restaurants):
     if not restaurant_data:
+        #ein error bzw abruch des Systems wird vermiden, indem ein eigener Error eigefügt wird 
         st.error("No data available.")
         return
 

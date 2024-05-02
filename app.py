@@ -3,15 +3,17 @@ import API
 import UI
 
 
-
+##hier beginnt die Überschrift, sowie Unterüberschrift## 
 st.title('Let us solve, what and where you\'ll eat tonight')
 st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
-st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
+
+    #dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
+st.write("")
 st.write("")
 
 
 
-#Notiz: der Folgende Code wurde mithilfe von ChatGPT geschrieben, um das Layout ansehnlich zu gestalten!! (da es nicht in der Vorlesung geleehrt wurde, wurde auf ChatGPT zurückgegriffen)
+##Notiz: der Folgende Code wurde mithilfe von ChatGPT geschrieben, um das Layout ansehnlich zu gestalten!! (da es nicht in der Vorlesung geleehrt wurde, wurde auf ChatGPT zurückgegriffen)
 def set_css():
     st.markdown("""
         <style>
@@ -32,7 +34,7 @@ def set_css():
 
 set_css()
 
-# Verwende HTML für die Textanzeige
+    # Verwende HTML für die Textanzeige
 st.markdown("""
 <div class="color-box">
     <h2>ERLEBE DIE BITEBUDDY EXPERIENCE!</h2>
@@ -43,63 +45,96 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
+
+    #erneuter Abstand
+st.write("")
 st.write("")
 st.write("")
 st.write("")
 st.write("")
 st.write("")
 
-#nun Folgend die ersten Interaktionsfelder 
-#gestartet wird mit dem Feld in dem die Anzahl der personen beschrieben wird (1-4 Pax sind möglich) 
+##Interaktionsfelder## 
+
+    #gestartet wird mit dem Feld in dem die Anzahl der personen beschrieben wird (1-4 Pax sind möglich) 
 st.title("Anzahl Personen") 
-user_input = st.text_input("Gib hier die Anzahl an Personen ein (Max. 4 Personen)")
+user_input = st.text_input("Gib hier die Anzahl an Personen ein (Max. 4 Personen)") #hier anzahl an Personen eingeben
 
 
-st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
+    #erneute Abstände 
 st.write("")
 st.write("")
 st.write("")
 st.write("")
+st.write("")
 
 
-#Name des / der Teilnehmer 
+    #Name des / der Teilnehmer 
 st.title("Wie heißt du?")
-user_input = st.text_input("Gebe hier deinen Namen ein")
+user_input = st.text_input("Gebe hier deinen Namen ein") #hier Name eingeben 
 
-#Nun beginnt der eigentliche Teil indem die vorgebenen Kriterien angegeben werden 
-# Überprüfe, ob der Nutzer bereits einen Namen eingegeben hat
+##Angabe der Kriterien für die Auswahl des Abendessen## 
+
+    #Überprüfe, ob der Nutzer bereits einen Namen eingegeben hat
 if user_input:
-    st.title(f"Lass uns beginnen, {user_input}")
+    #user_input wird überprüft, wenn das erfüllt wird, wird Name eingefügt in "Lass uns beginnen"
+    st.title(f"Lass uns beginnen, {user_input}") 
+
 else:
-    st.title("Bitte gib deinen Namen ein!!")
+    #Wenn user_input noch nicht ausgefüllt wurde, dann ändert sich nichts und es gibt nach wie vor die Aufforderung dies zu tun. 
+    st.title("Bitte gib deinen Namen ein!!") 
 
-#Küche eingeneben 
-st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
+
+
+    #erneute Abstände 
 st.write("")
 st.write("")
 st.write("")
 st.write("")
+st.write("")
 
 
 
 
 
+    #Region wo man essen will wird eingegeben 
 location = st.text_input("Wo würdest du gerne essen?")
-categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ])
+
+    #Die Kategroie stehen zur Auswahl mit hilfe einer Drop-Down-Applikation 
+categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ]) #Liste mit verschiedenen Küchen
+
+    #Hier wird der price angegeben, mithilfe einer Slidefunktion in dem zwischen Kategorie 1-4 ausgewählt werden kann. Hier kann es nur in ganzen Zahlen ausgewählt werden
 price = st.slider("Select a budget", 1, 4, 3 )
+
+    #Hier wird das Rating der Restaurants ausgewählt, auch mit einem silder. Jedoch kann hier das Rating in 0.1 schritten ausgewählt werden 
 min_rating = st.slider("Select a minimum rating", 1.0, 5.0, 3.0, step =0.1)
 
 
+
+
+##Hier wird nun die Ausgewählten Kriterien auf die Restaurants angewendet 
+    #es werden in all_restaurants alle Restaurants angezeigt die den Kriterien entsprechen 
 all_restaurants = []
+
+    #hier können die Fav. Restaurants abgespeichert werden, wenn die App öfters benutzt wird 
 fav_restaurants = []
 
 
+
+
+##Interaktion um die Anwendung auf die verschiedenen Restaurants zu starten 
+    #hier wird die Suche nach den Restaurants gestartet 
 if st.button("Finde mein Restaurant"):
+    #zugriff auf die verwendete API 
     restaurant_data = API.get_restaurant_data(location, categories, price, min_rating)
+
+    #Darstellung von allen Restaurants über die Verknüpfung mit der API durch restaurant_data 
     all_restaurants = restaurant_data
+
+    #hier wird über die UI (user Interface) die Restaurants dargestellt und ausgegeben, mit denen dann weiter Interagiert werden kann in Form von Abspeicherung der Restaurants als Favorieten 
+    #dargestellt wird das ganze in durch fav_restaurants die zu beginn eine leere Liste sind 
     UI.restaurant_data_display(restaurant_data,fav_restaurants)
    
-
+    #hier werden die Favoriten angezeigt die Abgespeichert wurden, die anzeige erfoglt auch über das UI mit einer verbindung zur Leeren Liste in fav_restaurants[] 
 if st.button("Zeig meine Favouriten"):
     UI.show_favourites(fav_restaurants)
