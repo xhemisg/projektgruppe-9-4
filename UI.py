@@ -48,6 +48,7 @@ def restaurant_data_display(restaurant_data, fav_restaurants):
         
 ##Die erstellung der Favoriten 
     #hier wird die Applikation Favoriten erstellt 
+# Beispiel-Daten für fav_restaurants, falls benötigt
 def show_favourites(fav_restaurants):
 
     #wenn es noch keien Favoriten gibt wird folgendes zurückgegeben 
