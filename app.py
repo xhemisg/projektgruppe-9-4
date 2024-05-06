@@ -10,9 +10,9 @@ import UI
 
 st.markdown("""
     <h1 style='font-size:60px; font-style:italic; transform: rotate(-25deg); text-align:center;''Let us solve, what and where you\'ll eat tonight'/h1>
-        <div style='font-size:40px; font-style:italic; text-align:center; 
-                background: #f0f0f0; border: 3px solid #d0d0d0; padding: 10px;
-                clip-path: polygon(20% 0%, 100% 0%, 90% 100%, 0% 100%);
+        <div style='font-size:20px; font-style:italic; text-align:center; 
+                background: #ffe599; border: 3px solid #d0d0d0; padding: 10px;
+                clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
                 box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);'>
        Der #1 Restaurant-Finder, um euer Dilemma zu lösen.
     </div>
