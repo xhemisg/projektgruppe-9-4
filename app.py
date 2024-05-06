@@ -21,9 +21,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Bild anzeigen
+#Bild anzeigen (geht noch nicht so wie es soll!!!)
+
 #image_url = "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=3240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 #st.image(image_url, caption="Bild von Unsplash")
+
+st.write("")
+st.write("")
 
 st.write("NUR DIESE DREI SCHRITTE NEHMEN EUCH DEN HUNGER")
 
