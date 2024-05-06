@@ -3,9 +3,27 @@ import API
 import UI
 
 
-##hier beginnt die Überschrift, sowie Unterüberschrift## 
-st.title('Let us solve, what and where you\'ll eat tonight')
-st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
+##Titel und Überschriften anpassen
+    #Nachfolgende HTLM-Code wurde von ChatGPT geschrieben, aufgrund fehlendem Wissen in dieser Programierungssprache 
+    #Titel wird schräg gemacht und schriftgröße angepasst 
+    #die Unterüberschrift wurde in einen geleben Rahmen gepackt, der als Trapez geformt und entsprechend der Hauptüberschrift ausgerichtet wurde 
+
+st.markdown("""
+    <h1 style='font-size:60px; font-style:italic; transform: rotate(-25deg); text-align:center;''Let us solve, what and where you\'ll eat tonight'/h1>
+        <div style='font-size:40px; font-style:italic; text-align:center; 
+                background: #f0f0f0; border: 3px solid #d0d0d0; padding: 10px;
+                clip-path: polygon(20% 0%, 100% 0%, 90% 100%, 0% 100%);
+                box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);'>
+       Der #1 Restaurant-Finder, um euer Dilemma zu lösen.
+    </div>
+""", unsafe_allow_html=True)
+
+
+# Bild anzeigen
+#image_url = "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=3240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+#st.image(image_url, caption="Bild von Unsplash")
+
+
 
     #dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
