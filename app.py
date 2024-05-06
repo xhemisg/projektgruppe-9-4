@@ -9,16 +9,24 @@ import UI
     #Titel wird schräg gemacht und schriftgröße angepasst 
     #die Unterüberschrift wurde in einen geleben Rahmen gepackt, der als Trapez geformt und entsprechend der Hauptüberschrift ausgerichtet wurde 
 st.markdown("""
-    <h1 style='font-size:60px; font-style:italic; transform: rotate( -3deg); text-align:center;'>
-        Let us solve, what and where you'll eat tonight
+    <h1 style='font-size:60px;                                           # Schriftgröße auf 60px einstellen
+                 font-style:italic;                                      # Schrift im Kursivstil formatieren
+                 transform: rotate(-3deg);                               # Überschrift um -3 Grad drehen (nach links neigen)
+                 text-align:center;'>                                    # Textausrichtung auf die Mitte setzen
+        Let us solve, what and where you'll eat tonight                  # Überschrift Inhalt 
     </h1>
-        <div style='font-size:20px; font-style:italic; transform: rotate( -3deg); text-align:center; 
-                background: #ff963B; border: 3px solid #d0d0d0; padding: 10px;
-                clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-                box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);'>
-       Der #1 Restaurant-Finder, um euer Dilemma zu lösen.
+    <div style='font-size:20px;                                          # Schriftgröße der Unterüberschrift auf 20px einstellen
+                 font-style:italic;                                      # Schrift im Kursivstil formatieren
+                 transform: rotate(-3deg);                               # Unterüberschrift um -3 Grad drehen (nach links neigen)
+                 text-align:center;                                      # Textausrichtung auf die Mitte setzen
+                 background: #ff963B;                                    # Hintergrundfarbe der Box auf #ff963B (Orange) einstellen
+                 border: 3px solid #d0d0d0;                              # Box-Rand (3px dick, hellgrau)
+                 padding: 10px;                                          # Innenabstand der Box auf 10px einstellen
+                 clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%); # Form der Box als Trapez einstellen
+                 box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);'>           # Schlagschatten der Box auf 3x5px, leicht schwarz
+        Der #1 Restaurant-Finder, um euer Dilemma zu lösen.              #Unterüberschrift Inhalt 
     </div>
-""", unsafe_allow_html=True)
+""", unsafe_allow_html=True) #erlaubt es uns HTLM in Streamlit direkt zu nutzen 
 
 
 #Bild anzeigen (geht noch nicht so wie es soll!!!)
@@ -39,43 +47,61 @@ st.write("")
     #der Code wurde selber Geschrieben, nach der Vorlage von den bisher genutzten von Chat-GPT ausgegeben HTLM programmierten Codes (vgl. Code weiter oben zur Darstellung der Überschrift)
     #Header-Zeile erstellen
 col1, col2, col3 = st.columns(3)
+
 with col1:
     st.markdown("""
-    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-        Anzahl an Personen
+    <div style='border: 1px solid #ddd;  # Rand der Box: 1px dick, hellgrau 
+                 padding: 10px;          # Innenabstand: 10px 
+                 border-radius: 5px;'>   # Ecken der Box abrunden 
+        Anzahl an Personen               # Inahlt Überschrift erste Spalte 
     </div>
     """, unsafe_allow_html=True)
+
 with col2:
     st.markdown("""
-    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-        Eure Kriterien
+    <div style='border: 1px solid #ddd;  # Rand der Box: 1px dick, hellgrau 
+                 padding: 10px;          # Innenabstand: 10px 
+                 border-radius: 5px;'>   # Ecken der Box abrunden 
+        Eure Kriterien                   # Inhalt Überschrift zweite Spalte 
     </div>
     """, unsafe_allow_html=True)
+
 with col3:
     st.markdown("""
-    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-        Zaubere!
+    <div style='border: 1px solid #ddd;  # Rand der Box: 1px dick, hellgrau 
+                 padding: 10px;          # Innenabstand: 10px 
+                 border-radius: 5px;'>   # Ecken der Box abrunden 
+        Zaubere!                         # Inhalt Überschrift dritte Spalte 
     </div>
     """, unsafe_allow_html=True)
 
 # Inhalt-Zeile erstellen
 col1, col2, col3 = st.columns(3)
+
 with col1:
     st.markdown("""
-    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-        Gebt an wie viele Leute fast verhungern
+    <div style='border: 1px solid #ddd;         # Rand der Box: 1px dick, hellgrau 
+                 padding: 10px;                 # Innenabstand: 10px 
+                 border-radius: 5px;'>          # Ecken der Box abrunden 
+        Gebt an wie viele Leute fast verhungern # Inhalt erste Spalte zweite Zeile 
     </div>
     """, unsafe_allow_html=True)
+
 with col2:
     st.markdown("""
-    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-       Jeder gibt manuell seine Daten ein
+    <div style='border: 1px solid #ddd;     # Rand der Box: 1px dick, hellgrau 
+                 padding: 10px;             # Innenabstand: 10px 
+                 border-radius: 5px;'>      # Ecken der Box abrunden 
+       Jeder gibt manuell seine Daten ein   # Inhalt zweite Überschrift, zweite Zeile 
     </div>
     """, unsafe_allow_html=True)
+
 with col3:
     st.markdown("""
-    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-        Nur noch ein Klick und der Zauber beginnt
+    <div style='border: 1px solid #ddd;             # Rand der Box: 1px dick, hellgrau 
+                 padding: 10px;                     # Innenabstand: 10px 
+                 border-radius: 5px;'>              # Ecken der Box abrunden 
+        Nur noch ein Klick und der Zauber beginnt   # Inhalt dritte Überschrift, zweite Zeile 
     </div>
     """, unsafe_allow_html=True)
 
