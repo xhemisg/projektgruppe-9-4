@@ -3,15 +3,17 @@ import API
 import UI
 
 
+
 ##Titel und Überschriften anpassen
     #Nachfolgende HTLM-Code wurde von ChatGPT geschrieben, aufgrund fehlendem Wissen in dieser Programierungssprache 
     #Titel wird schräg gemacht und schriftgröße angepasst 
     #die Unterüberschrift wurde in einen geleben Rahmen gepackt, der als Trapez geformt und entsprechend der Hauptüberschrift ausgerichtet wurde 
-
 st.markdown("""
-    <h1 style='font-size:60px; font-style:italic; transform: rotate(-25deg); text-align:center;''Let us solve, what and where you\'ll eat tonight'/h1>
-        <div style='font-size:20px; font-style:italic; text-align:center; 
-                background: #ffe599; border: 3px solid #d0d0d0; padding: 10px;
+    <h1 style='font-size:60px; font-style:italic; transform: rotate( -3deg); text-align:center;'>
+        Let us solve, what and where you'll eat tonight
+    </h1>
+        <div style='font-size:20px; font-style:italic; transform: rotate( -3deg); text-align:center; 
+                background: #ff963B; border: 3px solid #d0d0d0; padding: 10px;
                 clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
                 box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);'>
        Der #1 Restaurant-Finder, um euer Dilemma zu lösen.
@@ -23,7 +25,55 @@ st.markdown("""
 #image_url = "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=3240&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 #st.image(image_url, caption="Bild von Unsplash")
 
+st.write("NUR DIESE DREI SCHRITTE NEHMEN EUCH DEN HUNGER")
 
+st.write("")
+st.write("")
+
+##kurze Darstellung der Schritte wie man zum Ergebnis kommt 
+    #Darstellung erfolgt in einer Tabelle, welche aus zwei Zeilen (headline & inhalt) und drei Spalten (die drei Schritte) bestehen 
+    #der Code wurde selber Geschrieben, nach der Vorlage von den bisher genutzten von Chat-GPT ausgegeben HTLM programmierten Codes (vgl. Code weiter oben zur Darstellung der Überschrift)
+    #Header-Zeile erstellen
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.markdown("""
+    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
+        Anzahl an Personen
+    </div>
+    """, unsafe_allow_html=True)
+with col2:
+    st.markdown("""
+    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
+        Eure Kriterien
+    </div>
+    """, unsafe_allow_html=True)
+with col3:
+    st.markdown("""
+    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
+        Zaubere!
+    </div>
+    """, unsafe_allow_html=True)
+
+# Inhalt-Zeile erstellen
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.markdown("""
+    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
+        Gebt an wie viele Leute fast verhungern
+    </div>
+    """, unsafe_allow_html=True)
+with col2:
+    st.markdown("""
+    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
+       Jeder gibt manuell seine Daten ein
+    </div>
+    """, unsafe_allow_html=True)
+with col3:
+    st.markdown("""
+    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
+        Nur noch ein Klick und der Zauber beginnt
+    </div>
+    """, unsafe_allow_html=True)
 
     #dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
