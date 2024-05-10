@@ -87,7 +87,7 @@ st.write("")
 
 location = st.text_input("Wo würdest du gerne essen?")
 categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ])
-price = st.slider("Select a budget", 1, 4, 3 )
+price = st.slider("Select a budget level (0-4, where 0 is most affordable)", 0, 4, 1)
 min_rating = st.slider("Select a minimum rating", 1.0, 5.0, 3.0, step =0.1)
 
 
@@ -96,7 +96,7 @@ fav_restaurants = []
 
 
 if st.button("Finde mein Restaurant"):
-    restaurant_data = API.get_restaurant_data(location, categories, price, min_rating)
+    restaurant_data = API.get_restaurant_data(location, categories, price)
     all_restaurants = restaurant_data
     UI.restaurant_data_display(restaurant_data,fav_restaurants)
    

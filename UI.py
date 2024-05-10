@@ -1,69 +1,41 @@
 import streamlit as st
 
 import app
+import API
 
 
 
 
-def restaurant_data_display(restaurant_data, fav_restaurants):
-    if not restaurant_data:
+# ui.py
+def restaurant_data_display(restaurants, fav_restaurants):
+    if not restaurants:
         st.error("No data available.")
         return
 
-    for restaurant in restaurant_data:
-        
-        col1, col2 = st.columns([1, 2]) 
-        
+    for restaurant in restaurants:
+        col1, col2 = st.columns([1, 2])
+
         with col1:
-            if restaurant['image_url']:
-                st.image(restaurant['image_url'], width=300, use_column_width=True)
+            # Check if photos are available and construct image URL
+            if 'photos' in restaurant and len(restaurant['photos']) > 0:
+                photo_reference = restaurant['photos'][0]['photo_reference']
+                photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={photo_reference}&key=YOUR_API_KEY"
+                st.image(photo_url, width=300, use_column_width=True)
             else:
                 st.write("No image available.")
 
-        
         with col2:
             st.write(f"**Name:** {restaurant['name']}")
             st.write(f"**Rating:** {restaurant.get('rating', 'N/A')} ⭐")
-            st.write(f"**Preis:** {restaurant.get('price', 'N/A')}")
-            categories = ', '.join([cat['title'] for cat in restaurant.get('categories', [])])
-            st.write(f"**Kategorie:** {categories}")
-            st.write(f"**Öffnungszeiten:** {restaurant.get('hours', 'Not available')}")
+            st.write(f"**Price Level:** {restaurant.get('price_level', 'N/A')}")
+            st.write(f"**Address:** {restaurant.get('vicinity', 'N/A')}")
             if st.button(f"Like {restaurant['name']}"):
                 restaurant['liked'] = True
                 fav_restaurants.append(restaurant)
 
-       
         st.markdown("---")
- 
-        st.write("")
-        
-       
-def show_favourites(fav_restaurants):
-    if not fav_restaurants:
-        st.write("Du hast noch keine Restaurants geliked")
-    else:
-        st.write("Deine lieblings Restaurants")
-        for restaurant in fav_restaurants:
-            col1, col2 = st.columns([1, 2])  
 
-        
-        with col1:
-            if restaurant['image_url']:
-                st.image(restaurant['image_url'], width=300, use_column_width=True)
-            else:
-                st.write("No image available.")
 
-        
-        with col2:
-            st.write(f"**Name:** {restaurant['name']}")
-            st.write(f"**Rating:** {restaurant.get('rating', 'N/A')} ⭐")
-            st.write(f"**Preis:** {restaurant.get('price', 'N/A')}")
-            categories = ', '.join([cat['title'] for cat in restaurant.get('categories', [])])
-            st.write(f"**Kategorie:** {categories}")
-            st.write(f"**Öffnungszeiten:** {restaurant.get('hours', 'Not available')}")
-            
-        st.markdown("---")
-        st.write("")
         
         
         
