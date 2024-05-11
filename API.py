@@ -3,31 +3,29 @@
 import requests
 import streamlit as st
 
-def get_restaurant_data(location, price, categories):
+   
+def get_restaurant_data(city_name, min_rating, price, categories):
     api_key = 'AIzaSyAEKMkNu-Q-sq9d2FkhED6cvBiR9Z74Yx8'
-    url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-    # Ensure categories is a list and is not empty before joining
-    if categories and isinstance(categories, list):
-        category_str = ','.join(categories)
-    else:
-        category_str = ''  # Default to an empty string if categories is None or not a list
-
+    geocoding_url = f'https://maps.googleapis.com/maps/api/geocode/json?address={city_name}&key={api_key}'
+    geocoding_response = requests.get(geocoding_url)
+    geocoding_data = geocoding_response.json()
+    lat = geocoding_data['results'][0]['geometry']['location']['lat']
+    lng = geocoding_data['results'][0]['geometry']['location']['lng']
     params = {
-        'location': location,
+        'location': f'{lat},{lng}',
         'radius': 5000,
-        'type': 'restaurant',
-        'keyword': category_str,  # Use the safe category string
-        'minprice': price,
+        'type': 'estaurant',
+        'keyword': categories,
+        'inprice': price,
+        'opennow': True,
         'key': api_key
     }
-
     try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()  # Raises an error for bad requests
+        response = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', params=params)
+        response.raise_for_status()
         restaurant_data = response.json()
         restaurants = restaurant_data.get('results', [])
-        return restaurants  # Return the list of restaurants
-
+        return restaurants
     except requests.RequestException as e:
         st.error(f"API request error: {e}")
         return None

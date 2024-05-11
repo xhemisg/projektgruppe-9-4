@@ -4,10 +4,40 @@ import app
 import API
 
 
+def restaurant_data_display(restaurant_data, fav_restaurants):
+    if restaurant_data:
+        for restaurant in restaurant_data:
+            place_id = restaurant['place_id']
+            details_url = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&key=YOUR_GOOGLE_PLACES_API_KEY'
+            details_response = requests.get(details_url)
+            details = details_response.json()
 
+            if 'result' in details:
+                result = details['result']
+                place_name = result['name']
+                place_address = result['formatted_address']
+                place_rating = result['rating']
+                place_open_now = result['opening_hours']['open_now']
+                place_open_hours = result['opening_hours']['weekday_text']
+                place_cuisine = result['types']
+                place_image = result['photos'][0]['html_attributions'][0] if 'photos' in result else None
+
+                st.subheader(place_name)
+                st.write(f"Address: {place_address}")
+                st.write(f"Rating: {place_rating}")
+                st.write(f"Open now: {place_open_now}")
+                st.write(f"Opening hours: {place_open_hours}")
+                st.write(f"Cuisine: {place_cuisine}")
+                st.image(place_image, caption=f"Image of {place_name}")
+
+                if st.button("Add to favorites"):
+                    fav_restaurants.append(restaurant)
+                    st.success("Restaurant added to favorites")
+    else:
+        st.warning("No restaurants found")
 
 # ui.py
-def restaurant_data_display(restaurants, fav_restaurants):
+"""def restaurant_data_display(restaurants, fav_restaurants):
     if not restaurants:
         st.error("No data available.")
         return
@@ -35,7 +65,7 @@ def restaurant_data_display(restaurants, fav_restaurants):
 
         st.markdown("---")
 
-
+"""
         
         
         
