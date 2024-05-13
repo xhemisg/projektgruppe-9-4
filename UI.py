@@ -1,137 +1,57 @@
 import streamlit as st
-
 import app
 
-
-
-
-def restaurant_data_display(restaurant_data, fav_restaurants):
-    if not restaurant_data:
-        st.error("No data available.")
-        return
-
-    for restaurant in restaurant_data:
-        
-        col1, col2 = st.columns([1, 2]) 
-        
-        with col1:
-            if restaurant['image_url']:
-                st.image(restaurant['image_url'], width=300, use_column_width=True)
-            else:
-                st.write("No image available.")
-
-        
-        with col2:
-            st.write(f"**Name:** {restaurant['name']}")
-            st.write(f"**Rating:** {restaurant.get('rating', 'N/A')} ⭐")
-            st.write(f"**Preis:** {restaurant.get('price', 'N/A')}")
-            categories = ', '.join([cat['title'] for cat in restaurant.get('categories', [])])
-            st.write(f"**Kategorie:** {categories}")
-            st.write(f"**Öffnungszeiten:** {restaurant.get('hours', 'Not available')}")
-            if st.button(f"Like {restaurant['name']}"):
-                restaurant['liked'] = True
-                fav_restaurants.append(restaurant)
-
-       
-        st.markdown("---")
- 
-        st.write("")
-        
-       
-def show_favourites(fav_restaurants):
-    if not fav_restaurants:
-        st.write("Du hast noch keine Restaurants geliked")
-    else:
-        st.write("Deine lieblings Restaurants")
-        for restaurant in fav_restaurants:
-            col1, col2 = st.columns([1, 2])  
-
-        
-        with col1:
-            if restaurant['image_url']:
-                st.image(restaurant['image_url'], width=300, use_column_width=True)
-            else:
-                st.write("No image available.")
-
-        
-        with col2:
-            st.write(f"**Name:** {restaurant['name']}")
-            st.write(f"**Rating:** {restaurant.get('rating', 'N/A')} ⭐")
-            st.write(f"**Preis:** {restaurant.get('price', 'N/A')}")
-            categories = ', '.join([cat['title'] for cat in restaurant.get('categories', [])])
-            st.write(f"**Kategorie:** {categories}")
-            st.write(f"**Öffnungszeiten:** {restaurant.get('hours', 'Not available')}")
-            
-        st.markdown("---")
-        st.write("")
-        
-        
-        
-'''if 'liked_restaurants' not in st.session_state:
-    st.session_state.liked_restaurants = []
-
+@st.experimental_fragment
 def restaurant_data_display(restaurant_data):
     if not restaurant_data:
         st.error("No data available.")
         return
 
+    if 'liked_results' not in st.session_state:
+        st.session_state['liked_results'] = []
+
+    # Initialize or update 'liked' property in restaurant data if needed
     for restaurant in restaurant_data:
-        # Create a row with two columns: one for the image and one for details
-        col1, col2 = st.columns([1, 2])  # Adjust the ratio as needed for visual balance
+        if 'liked' not in restaurant:
+            restaurant['liked'] = False
 
-        # Column for the image
-        with col1:
-            if restaurant['image_url']:
-                st.image(restaurant['image_url'], width=300, use_column_width=True)
-            else:
-                st.write("No image available.")
+    with st.form("like_form"):
+        for idx, restaurant in enumerate(restaurant_data):
+            col1, col2 = st.columns([1, 2])
 
-        # Column for the restaurant details
-        with col2:
-            st.write(f"**Name:** {restaurant['name']}")
-            st.write(f"**Rating:** {restaurant.get('rating', 'N/A')} ⭐")
-            st.write(f"**Preis:** {restaurant.get('price', 'N/A')}")
-            categories = ', '.join([cat['title'] for cat in restaurant.get('categories', [])])
-            st.write(f"**Kategorie:** {categories}")
-            st.write(f"**Öffnungszeiten:** {restaurant.get('hours', 'Not available')}")
-            if st.button(f"Like {restaurant['name']}"):
-                restaurant['liked'] = True
-                st.session_state.liked_restaurants.append(restaurant)  # Add the liked restaurant to session state
+            with col1:
+                if 'image_url' in restaurant and restaurant['image_url']:
+                    st.image(restaurant['image_url'], width=300, use_column_width=True)
+                else:
+                    st.write("No image available.")
 
-        # Add a horizontal line and some space after each restaurant
-        st.markdown("---")
-        st.write("")  # Adding a little extra space after the separator
+            with col2:
+                st.write(f"**Name:** {restaurant['name']}")
+                st.write(f"**Rating:** {restaurant.get('rating', 'N/A')} ⭐")
+                st.write(f"**Price:** {restaurant.get('price', 'N/A')}")
+                categories = ', '.join([cat['title'] for cat in restaurant.get('categories', [])])
+                st.write(f"**Category:** {categories}")
+                st.write(f"**Hours:** {restaurant.get('hours', 'Not available')}")
 
-def show_favourites():
-    if st.session_state.liked_restaurants:
-        st.write("Your liked restaurants:")
-        for restaurant in st.session_state.liked_restaurants:
-            st.write(f"- {restaurant['name']}")
+                # Checkbox for liking the restaurant, linked directly to its 'liked' property
+                liked_key = f"liked_{idx}"
+                restaurant['liked'] = st.checkbox("Like", key=liked_key, value=restaurant['liked'])
 
-'''
-        
-        
-"""def show_restaurant(index, restaurants):
-    if restaurants:
-        restaurant = restaurants[index]
-        st.subheader(f"{restaurant['name']} - {restaurant.get('rating', 'No rating available')}")
-        categories = ", ".join([cat['title'] for cat in restaurant.get('categories', [])])
-        st.write(f"Categories: {categories if categories else 'Not available'}")
-        st.write(f"Price range: {restaurant.get('price', 'Not available')}")
-        if restaurant.get('image_url'):
-            st.image(restaurant['image_url'], caption=restaurant['name'])
+        # Submit button for the form
+        submitted = st.form_submit_button("Submit Likes")
+    
+    if submitted:
+        # Append new likes to existing liked results or create new if not present
+        new_likes = [restaurant for restaurant in restaurant_data if restaurant.get('liked')]
+        if 'liked_results' in st.session_state:
+            st.session_state['liked_results'] += new_likes  # Append new likes
         else:
-            st.write("No image available for this restaurant.")
-        st.write(f"**Open:** {'Yes' if not restaurant.get('is_closed', True) else 'No'}")
-        if 'hours' in restaurant:
-            st.write(f"**Hours:** {restaurant['hours'][0]['open']}")
-        else:
-            st.write("Hours not available")
-        business_details = get_business_details(restaurant['id'], api_key)
-        if business_details and 'hours' in business_details:
-            st.write(f"**Detailed hours:** {business_details['hours']}")
-"""
+            st.session_state['liked_results'] = new_likes  # Initialize if not already present
+
+        st.success("Likes processed successfully!")
         
 
-            
+
+
+   
     

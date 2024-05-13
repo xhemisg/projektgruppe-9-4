@@ -3,12 +3,15 @@ import requests
 import datetime
 import pytz
 import UI
-import app 
+import app
 
 # Funktion, um Daten von der Yelp API zu erhalten
 def get_restaurant_data(location, min_rating, price, categories):
-    api_key = 'GjgxNlVcPtkDQOJsW9oZoSS0jjn74Yb6i3qoEoPxTu4ylG59rSNTvwVfA9knU42IaCSl1qIoIU0tGdnD-OJCPAFHNc_KvwjXF4pZhXw6RCZ4_hJfD6dz2fxYPawmZnYx'
-    headers = {'Authorization': f'Bearer {api_key}'}
+    api_key = 'eALX9MxmMhjtB2o0aay_H2RbI14rvSdwDXReiuGiKmPhaKJ1JAVJKfjGjUpfr6eGsrGU3XoVhnkCQKs9Zc2TZY6xIdg61URHkz7cQFaXIcotU6SdMgTq8KHTllw_ZnYx'
+    headers = {
+    'Authorization': f'Bearer {api_key}',
+    'User-Agent': 'StudentProjectHSG'
+    }
     url = 'https://api.yelp.com/v3/businesses/search'
     params = {
         'location': location,

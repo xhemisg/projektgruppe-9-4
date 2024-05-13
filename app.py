@@ -3,6 +3,8 @@ import API
 import UI
 
 
+st.set_page_config(page_title="Bite Buddy", layout="wide", initial_sidebar_state="collapsed")
+
 
 st.title('Let us solve, what and where you\'ll eat tonight')
 st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
@@ -53,53 +55,55 @@ st.write("")
 #nun Folgend die ersten Interaktionsfelder 
 #gestartet wird mit dem Feld in dem die Anzahl der personen beschrieben wird (1-4 Pax sind möglich) 
 st.title("Anzahl Personen") 
-user_input = st.text_input("Gib hier die Anzahl an Personen ein (Max. 4 Personen)")
+players = st.radio('Wie viele personen seit ihr?', ["2", "3", "4"], index = None, horizontal = True )
 
 
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
-st.write("")
-st.write("")
-st.write("")
 
 
-#Name des / der Teilnehmer 
-st.title("Wie heißt du?")
-user_input = st.text_input("Gebe hier deinen Namen ein")
+
+link_button_disabled = True #Button auschaulten 
+
+if players:
+    st.session_state['players'] = int(players)
+    st.title("Wie heißt ihr?")
+
+    # Create a text input for each player and let Streamlit manage the session state
+    names_entered = []
+    for i in range(1, st.session_state['players'] + 1):
+        name = st.text_input(" ", key=f"spieler{i}", placeholder=f"Gast {i}")
+        
+        if name:
+            names_entered.append(name)
+
+    # Determine if all names are entered
+    all_names_entered = len(names_entered) == st.session_state['players']
+    st.session_state['names'] = names_entered
+    # Request location if all names are entered
+    if all_names_entered:
+        st.title("In welcher Ortschaft wollt ihr essen?")
+        location = st.text_input(" ", key="ort", placeholder="Bitte gebt eine Stadt ein!")
+        if location:
+            st.session_state['location'] = location
+            link_button_disabled = False 
+        else:
+            link_button_disabled = True
+
+      
+st.page_link ("pages/playerpreferences.py", label= "Lass uns Los Legen", disabled = link_button_disabled)
 
 #Nun beginnt der eigentliche Teil indem die vorgebenen Kriterien angegeben werden 
-# Überprüfe, ob der Nutzer bereits einen Namen eingegeben hat
-if user_input:
-    st.title(f"Lass uns beginnen, {user_input}")
-else:
-    st.title("Bitte gib deinen Namen ein!!")
+
+
+
 
 #Küche eingeneben 
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
-st.write("")
-st.write("")
-st.write("")
 
 
 
 
 
-location = st.text_input("Wo würdest du gerne essen?")
-categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ])
-price = st.slider("Select a budget", 1, 4, 3 )
-min_rating = st.slider("Select a minimum rating", 1.0, 5.0, 3.0, step =0.1)
 
-
-all_restaurants = []
-fav_restaurants = []
-
-
-if st.button("Finde mein Restaurant"):
-    restaurant_data = API.get_restaurant_data(location, categories, price, min_rating)
-    all_restaurants = restaurant_data
-    UI.restaurant_data_display(restaurant_data,fav_restaurants)
-   
-
-if st.button("Zeig meine Favouriten"):
-    UI.show_favourites(fav_restaurants)
