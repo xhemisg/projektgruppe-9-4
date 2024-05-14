@@ -1,6 +1,9 @@
 import streamlit as st 
 import API
 import UI
+import requests
+import datetime
+import pytz
 
 
 st.set_page_config(page_title="Bite Buddy", layout="wide", initial_sidebar_state="collapsed")
@@ -61,6 +64,7 @@ players = st.radio('Wie viele personen seit ihr?', ["2", "3", "4"], index = None
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
 
+timezone = pytz.timezone('Europe/Zurich')
 
 
 link_button_disabled = True #Button auschaulten 
@@ -76,7 +80,8 @@ if players:
         
         if name:
             names_entered.append(name)
-
+    if 'names' not in st.session_state:
+        st.session_state['names'] = []
     # Determine if all names are entered
     all_names_entered = len(names_entered) == st.session_state['players']
     st.session_state['names'] = names_entered
@@ -89,9 +94,20 @@ if players:
             link_button_disabled = False 
         else:
             link_button_disabled = True
+        st.title("Wann wollt ihr essen gehen?")
+        time = st.time_input("Choose the dining time:")
 
-      
+    # Datum von heute - App is gedacht als spontan nur für den abend userfriendlyness
+        today_date = datetime.date.today()
+    # Zeit und Datum Kombinieren - ChatGPT hilfe um den code zu erstellen
+        dining_datetime = datetime.datetime.combine(today_date, time)
+        if 'open_at' not in st.session_state:
+            st.session_state['open_at'] = []
+        open_at = int(timezone.localize(dining_datetime).timestamp())
+        st.session_state['open_at'] = open_at
+    
 st.page_link ("pages/playerpreferences.py", label= "Lass uns Los Legen", disabled = link_button_disabled)
+
 
 #Nun beginnt der eigentliche Teil indem die vorgebenen Kriterien angegeben werden 
 

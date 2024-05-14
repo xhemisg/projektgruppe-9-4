@@ -6,7 +6,7 @@ import UI
 import app
 
 # Funktion, um Daten von der Yelp API zu erhalten
-def get_restaurant_data(location, min_rating, price, categories):
+def get_restaurant_data(location, min_rating, price, categories, open_at, limit):
     api_key = 'eALX9MxmMhjtB2o0aay_H2RbI14rvSdwDXReiuGiKmPhaKJ1JAVJKfjGjUpfr6eGsrGU3XoVhnkCQKs9Zc2TZY6xIdg61URHkz7cQFaXIcotU6SdMgTq8KHTllw_ZnYx'
     headers = {
     'Authorization': f'Bearer {api_key}',
@@ -15,10 +15,11 @@ def get_restaurant_data(location, min_rating, price, categories):
     url = 'https://api.yelp.com/v3/businesses/search'
     params = {
         'location': location,
-        'limit': 10,
+        'limit': limit,
         'rating': min_rating,# Mindestbewertungsparameter
         'categories': categories,
-        'price': str(price)
+        'price': str(price),
+        'open_at' : open_at
 
     }
 
