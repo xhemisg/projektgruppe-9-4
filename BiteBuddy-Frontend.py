@@ -1,9 +1,27 @@
 import streamlit as st
+import urllib.request
+import tkinter as tk
+from PIL import Image, ImageTk
 
 st.title('Let us solve, what and where you\'ll eat tonight')
 st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
+
+
+url = "https://photos.onedrive.com/share/44FB70F8C5BC0673!183369?cid=44FB70F8C5BC0673&resId=44FB70F8C5BC0673!183369&authkey=!AHslHKKh1yS1dlk&ithint=photo"
+filename, _ = urllib.request.urlretrieve(url, "temp.jpg")
+
+root = tk.Tk()
+
+image = Image.open("temp.jpg")
+tk_image = ImageTk.PhotoImage(image)
+
+label = tk.Label(root, image=tk_image)
+label.pack()
+
+root.mainloop()
+
 
 
 
