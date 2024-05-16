@@ -3,47 +3,56 @@ import API
 import UI
 
 
-st.set_page_config(page_title="Bite Buddy", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Bite Buddy", layout="wide", initial_sidebar_state="collapsed") #Konfiguration der Page
 
 if 'current_index' not in st.session_state: #Verfulgung der Spieler
     st.session_state['current_index'] = 0
 
-current_player = st.session_state['names'][st.session_state['current_index']]
+current_player = st.session_state['names'][st.session_state['current_index']] #holt basierend auf aktuellem durchlauf den Namen des Spielers
 
 
 #player_likes inizialisieren
 if 'player_likes' not in st.session_state:
             st.session_state['player_likes'] = {}
+#min_srating inizialisieren um es in anderen pages zu verwenden        
+if 'min_rating' not in st.session_state:
+            st.session_state['min_rating'] = {}
+            
 # abgleich ob bereits alle spieler abgegeben haben 
 allespielerdone = len(st.session_state['player_likes']) == len(st.session_state['names'])
 
             
-if not allespielerdone:
+if not allespielerdone: #solange nicht True wird die Maske für die Präferenzen und Likes angezeigt 
     st.title(f"{current_player}, bitte deine Präferenzen!")
-
-    location = st.session_state.get('location', "Zürich")
+# hole die Variablen für Location und open_at vom sessionstate 
+    location = st.session_state.get('location') 
     open_at = st.session_state.get('open_at')
-    categories = 'restaurant'
-    #categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ])
-    price = st.slider("Select a budget", 1, 4, 3 )
-    min_rating = st.slider("Select a minimum rating", 1.0, 5.0, 3.0, step =0.1)
-    limit = st.radio('Wie viele Vorschläge Willst du?', ["10", "20", "30"], index = None, horizontal = True )
+    categories = 'restaurant' # um nur restaurants angzeigt zu kriegen base value
+    
+    #User Input für Filter Kriterien
+    preis = st.slider("Was ist dein Budget?", 1, 4, 3 )
+    min_rating = st.slider("Wie gut muss die Bewertung Mindestens sein?", 1.0, 5.0, 3.0, step =0.1, help = "Bei höheren Bewertungen kann es sein dass es weniger bis keine Resultate gibt.")
+    st.session_state['min_rating'] = min_rating
+    #hinweis dass bei Hoher mindest bewertung nicht so viele Resultate angezeigt werden
+    limit = st.radio('Wie viele Vorschläge willst du?', ["10", "20", "30"], index = None, horizontal = True )
 
+    price = str(preis)
+    
     st.divider()
 
-    if st.button("Finde mein Restaurant"):
+    if st.button("Finde mein Restaurant"): # ausführen des API requests und der Funktion um die Spielerspeziefischen Resultate anzuzeigen
         restaurant_data = API.get_restaurant_data(location, open_at, categories, price, min_rating, limit)
         if UI.restaurant_data_display(restaurant_data, current_player):
             # Capture likes when data is displayed and submitted.
             st.session_state['player_likes'][current_player] = st.session_state.get('liked_results', [])
     st.divider()   
     
-    if st.button("Next Player"):
-        # Ensure current player's likes are captured before moving on.
+    if st.button("Nächster"):
+        # Speichern der Likes vom spieler davor 
         if current_player not in st.session_state['player_likes']:
             st.session_state['player_likes'][current_player] = st.session_state.get('liked_results', [])
 
-        # Check if this was the last player.
+        # Überprüfen ob es der letzte spieler ist (ChatGPT Lösung da sonst immer erst die resultate des letzten spieler bim nochmaligen Cklicken von Nächster Button gespeichert wurden)
         if len(st.session_state['player_likes']) == len(st.session_state['names']):
             st.session_state['current_index'] = 0  # Reset for results
             st.experimental_rerun()
@@ -52,6 +61,6 @@ if not allespielerdone:
             st.experimental_rerun() #seite wieder leeren für nächsten spieler
     
 if allespielerdone:
-    st.page_link ("pages/ergebnis.py", label= "Zu den Resultaten")
-    
+    st.switch_page ("pages/ergebnis.py") #label= "Zu den Resultaten")
+    UI.display_final_likes #führt die funktion aus 
 

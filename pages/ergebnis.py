@@ -1,6 +1,6 @@
 import streamlit as st
 import UI
 import datetime
-st.set_page_config(page_title="Bite Buddy", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Bite Buddy", layout="wide")
 
-UI.display_final_likes()
+
