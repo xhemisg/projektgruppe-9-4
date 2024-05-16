@@ -113,7 +113,7 @@ def display_final_likes():
             </div>
             """, unsafe_allow_html=True)
         return
-
+# ChatGPT Hilfe für die Logik weil zu komplex mit den sessionstates und abgleichen 
     total_players = len(st.session_state['names'])
     all_likes = st.session_state['player_likes']
 
