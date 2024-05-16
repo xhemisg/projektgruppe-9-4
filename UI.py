@@ -1,54 +1,69 @@
 import streamlit as st
 import app
+import datetime
 
-@st.experimental_fragment
 def restaurant_data_display(restaurant_data, current_player):
+    open_at_datetime = datetime.datetime.fromtimestamp(st.session_state['open_at'])
     if not restaurant_data:
         st.error("No data available.")
         return
-
+    
+    
     if 'liked_results' not in st.session_state:
         st.session_state['liked_results'] = []
-
-    # Initialize or update 'liked' property in restaurant data if needed
+    
+    # Initialize like property
     for restaurant in restaurant_data:
         if 'liked' not in restaurant:
             restaurant['liked'] = False
 
     with st.form("like_form"):
         for idx, restaurant in enumerate(restaurant_data):
-            col1, col2 = st.columns([1, 2])
+            col1, col2, col3 = st.columns([5, 3, 2])
 
             with col1:
+                st.markdown(
+                """
+                <style>
+             .image {
+             height: 300px;
+             width: 250px;
+                object-fit: cover;
+             }
+                </style>
+             """, unsafe_allow_html=True)
+                
                 if 'image_url' in restaurant and restaurant['image_url']:
-                    st.image(restaurant['image_url'], width=300, use_column_width=True)
+                    st.markdown(f"<img class='image' src='{restaurant['image_url']}'/>", unsafe_allow_html=True)
                 else:
                     st.write("No image available.")
-
+                    
             with col2:
                 st.write(f"**Name:** {restaurant['name']}")
                 st.write(f"**Bewertungg:** {restaurant.get('rating', 'N/A')} ⭐")
                 st.write(f"**Preis:** {restaurant.get('price', 'N/A')}")
                 categories = ', '.join([cat['title'] for cat in restaurant.get('categories', [])])
                 st.write(f"**Küche:** {categories}")
-                st.write(f"**Adresse:** {restaurant.get('address', 'N/A')}")
-                st.write(f"**Website:** {restaurant.get('website', 'N/A')}")
-                st.write(f"**")
-
-                # Checkbox for liking the restaurant, linked directly to its 'liked' property
+                address = ', '.join([restaurant['location'].get(key, '') for key in ['address1', 'city', 'state', 'zip_code']])
+                st.write(f"**Adresse:** {address}")
+                st.write(f"**Geöffnet am {open_at_datetime.strftime('%Y-%m-%d')} um {open_at_datetime.strftime('%H:%M')}**")
+                    
+                st.markdown(f'**Webseite:** [Auf Yelp anschauen]({restaurant.get("url")})', unsafe_allow_html=True)
+            
+            with col3:
+                # Checkbox um restautrants zu liken
                 liked_key = f"liked_{idx}"
                 restaurant['liked'] = st.checkbox("Like", key=liked_key, value=restaurant.get('liked', False))
 
-
-        # Submit button for the form
-        submitted = st.form_submit_button("Submit Likes")
-    
-    
+            st.markdown("---")
+          # Submit button for the form
+       
+        submitted = st.form_submit_button("Meine Lieblinge Speichern")
+  
     if submitted:
         current_likes = set(restaurant['id'] for restaurant in restaurant_data if restaurant.get('liked'))
         st.session_state['liked_results'] = [restaurant for restaurant in restaurant_data if restaurant['id'] in current_likes]
-
-        st.success("Likes updated successfully!")
+        st.success("Deine Lieblings Restaurants sind gespeichert")
 
 
 

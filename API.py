@@ -6,8 +6,8 @@ import UI
 import app
 
 # Funktion, um Daten von der Yelp API zu erhalten
-def get_restaurant_data(location, min_rating, price, categories, open_at, limit):
-    api_key = 'eALX9MxmMhjtB2o0aay_H2RbI14rvSdwDXReiuGiKmPhaKJ1JAVJKfjGjUpfr6eGsrGU3XoVhnkCQKs9Zc2TZY6xIdg61URHkz7cQFaXIcotU6SdMgTq8KHTllw_ZnYx'
+def get_restaurant_data(location,open_at, categories, min_rating, price, limit):
+    api_key = 'gPtjGrH3r9Me-BwkN7X-beLbp61tSEpx7TTMFyJm2TviEPqkHZryUJM5z763-lilKTr6yCwjXhBR5-VlNvVjZP5f7Qug24u1L_EPVF574oGk_YnCCjlQ3fbv3S9GZnYx'
     headers = {
     'Authorization': f'Bearer {api_key}',
     'User-Agent': 'StudentProjectHSG'
@@ -16,17 +16,18 @@ def get_restaurant_data(location, min_rating, price, categories, open_at, limit)
     params = {
         'location': location,
         'limit': limit,
-        'rating': min_rating,# Mindestbewertungsparameter
         'categories': categories,
-        'price': str(price),
+        'rating': price,# Mindestbewertungsparameter
+        'price': min_rating,
         'open_at' : open_at
 
     }
-
+    
     try:
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()  # Fehler werfen, wenn die Anfrage fehlschlägt
         restaurant_data = response.json()
+        print("Response Data: ", response.json()) 
         return restaurant_data['businesses']  # Nur die Liste der Restaurants zurückgeben
 
     except requests.RequestException as e:

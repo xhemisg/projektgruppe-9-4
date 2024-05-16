@@ -8,9 +8,15 @@ import pytz
 
 st.set_page_config(page_title="Bite Buddy", layout="wide", initial_sidebar_state="collapsed")
 
+col1, col2 = st.columns([1, 2]) #Zwei Kolonnen um um es ansichtlicher zu machen 
 
-st.title('Let us solve, what and where you\'ll eat tonight')
-st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
+with col1:
+    # APP Titel
+    st.title('Let us solve, what and where you\'ll eat tonight')
+    st.write('Der #1 Restaurant-Finder, um euer Dilemma zu lösen')
+
+with col2: #Tietelbild der APP
+    st.image('BiteBuddy Immage.jpeg')
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
 
@@ -51,9 +57,7 @@ st.markdown("""
 st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
 st.write("")
 st.write("")
-st.write("")
-st.write("")
-st.write("")
+
 
 #nun Folgend die ersten Interaktionsfelder 
 #gestartet wird mit dem Feld in dem die Anzahl der personen beschrieben wird (1-4 Pax sind möglich) 
@@ -89,14 +93,17 @@ if players:
     if all_names_entered:
         st.title("In welcher Ortschaft wollt ihr essen?")
         location = st.text_input(" ", key="ort", placeholder="Bitte gebt eine Stadt ein!")
-        if location:
+        st.title("Wann wollt ihr essen gehen?")
+        time = st.time_input("Choose the dining time:", "now")
+        
+        if location: #wird überprüft ob location existiert und nur dann kann man weiter cklicken - stellt sicher das man später keine problme hat wenn die location fehlt 
+                    #zeit ist per default auf Jetzt gestellt darum nicht nötig dies zu testen 
             st.session_state['location'] = location
             link_button_disabled = False 
         else:
             link_button_disabled = True
-        st.title("Wann wollt ihr essen gehen?")
-        time = st.time_input("Choose the dining time:")
-
+        
+        
     # Datum von heute - App is gedacht als spontan nur für den abend userfriendlyness
         today_date = datetime.date.today()
     # Zeit und Datum Kombinieren - ChatGPT hilfe um den code zu erstellen
@@ -104,19 +111,17 @@ if players:
         if 'open_at' not in st.session_state:
             st.session_state['open_at'] = []
         open_at = int(timezone.localize(dining_datetime).timestamp())
-        st.session_state['open_at'] = open_at
-    
-st.page_link ("pages/playerpreferences.py", label= "Lass uns Los Legen", disabled = link_button_disabled)
+        st.session_state['open_at'] = open_at #opent_at variable in sessionstate ablegen für API nutzen
+
+st.divider ()  
+#Nun beginnt der eigentliche Teil indem die vorgebenen Kriterien angegeben werden - Verlinkung auf eine Unterseite   
+st.page_link ("pages/playerpreferences.py", label= "Lass uns Los Legen", icon = "🍕", disabled = link_button_disabled)
 
 
-#Nun beginnt der eigentliche Teil indem die vorgebenen Kriterien angegeben werden 
 
 
 
 
-#Küche eingeneben 
-st.write("")#dienen des Abstandes in der Website um den Code ansehnlicher zu gestalten 
-st.write("")
 
 
 
