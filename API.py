@@ -7,7 +7,7 @@ import app
 
 # Funktion, um Daten von der Yelp API zu erhalten
 def get_restaurant_data(location, min_rating, price, categories, open_at, limit):
-    api_key = 'eALX9MxmMhjtB2o0aay_H2RbI14rvSdwDXReiuGiKmPhaKJ1JAVJKfjGjUpfr6eGsrGU3XoVhnkCQKs9Zc2TZY6xIdg61URHkz7cQFaXIcotU6SdMgTq8KHTllw_ZnYx'
+    api_key = 'gPtjGrH3r9Me-BwkN7X-beLbp61tSEpx7TTMFyJm2TviEPqkHZryUJM5z763-lilKTr6yCwjXhBR5-VlNvVjZP5f7Qug24u1L_EPVF574oGk_YnCCjlQ3fbv3S9GZnYx'
     headers = {
     'Authorization': f'Bearer {api_key}',
     'User-Agent': 'StudentProjectHSG'

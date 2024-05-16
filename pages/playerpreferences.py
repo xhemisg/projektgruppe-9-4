@@ -39,7 +39,7 @@ if st.button("Next Player"):
         st.session_state['current_index'] += 1
     else:
         st.session_state['current_index'] = 0  # Reset or move to a summary page
-    st.experimental_rerun()
+    st.experimental_rerun() 
     
     
 st.page_link ("pages/ergebnis.py", label= "Zu den Resultaten")
