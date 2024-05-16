@@ -23,8 +23,8 @@ if not allespielerdone:
 
     location = st.session_state.get('location', "Zürich")
     open_at = st.session_state.get('open_at')
-
-    categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ])
+    categories = 'restaurant'
+    #categories = st.multiselect("Welche Küche bevorzugst du", ["newamerican", "italian", "swissfood", "chineese", "mexican" ])
     price = st.slider("Select a budget", 1, 4, 3 )
     min_rating = st.slider("Select a minimum rating", 1.0, 5.0, 3.0, step =0.1)
     limit = st.radio('Wie viele Vorschläge Willst du?', ["10", "20", "30"], index = None, horizontal = True )
